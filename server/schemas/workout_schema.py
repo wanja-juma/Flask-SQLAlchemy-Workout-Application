@@ -1,4 +1,5 @@
-from marshmallow import validate
+from marshmallow import fields, validate
+
 from extensions import ma
 from models import Workout
 
@@ -11,13 +12,15 @@ class WorkoutSchema(ma.SQLAlchemyAutoSchema):
 
     duration_minutes = ma.auto_field(
         required=True,
-        validate=validate.Range(
-            min=1,
-            max=300,
-            error="Workout duration must be between 1 and 300 minutes."
-        )
+        validate=validate.Range(min=1, max=300)
     )
 
     date = ma.auto_field(required=True)
 
     notes = ma.auto_field()
+
+    workout_exercises = fields.Nested(
+        "WorkoutExerciseSchema",
+        many=True,
+        exclude=("workout",)
+    )

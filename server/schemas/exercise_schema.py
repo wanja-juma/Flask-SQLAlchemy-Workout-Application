@@ -1,5 +1,5 @@
-from marshmallow import validate
 from extensions import ma
+from marshmallow import fields, validate
 from models import Exercise
 
 
@@ -11,11 +11,7 @@ class ExerciseSchema(ma.SQLAlchemyAutoSchema):
 
     name = ma.auto_field(
         required=True,
-        validate=validate.Length(
-            min=2,
-            max=100,
-            error="Exercise name must be between 2 and 100 characters."
-        )
+        validate=validate.Length(min=2, max=100)
     )
 
     category = ma.auto_field(
@@ -32,3 +28,10 @@ class ExerciseSchema(ma.SQLAlchemyAutoSchema):
     )
 
     equipment_needed = ma.auto_field(required=True)
+
+    # populated later to avoid circular references
+    workout_exercises = fields.Nested(
+        "WorkoutExerciseSchema",
+        many=True,
+        exclude=("exercise",)
+    )
