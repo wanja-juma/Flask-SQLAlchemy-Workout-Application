@@ -3,6 +3,8 @@ from flask import Flask
 from config import Config
 from extensions import db, migrate, ma, cors
 
+from routes import api_bp
+
 # Import models so Flask-Migrate can detect them
 from models import Exercise, Workout, WorkoutExercise
 
@@ -16,6 +18,8 @@ def create_app():
     migrate.init_app(app, db)
     ma.init_app(app)
     cors.init_app(app)
+
+    app.register_blueprint(api_bp)
 
     @app.route("/")
     def home():
