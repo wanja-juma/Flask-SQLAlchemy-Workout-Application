@@ -13,10 +13,7 @@ from schemas import (
 
 api_bp = Blueprint("api", __name__)
 
-
-# =====================================================
 # EXERCISES
-# =====================================================
 
 @api_bp.get("/exercises")
 def get_exercises():
@@ -72,10 +69,7 @@ def delete_exercise(id):
 
     return jsonify({"message": "Exercise deleted successfully"}), 200
 
-
-# =====================================================
 # WORKOUTS
-# =====================================================
 
 @api_bp.get("/workouts")
 def get_workouts():
@@ -134,10 +128,7 @@ def delete_workout(id):
 
     return jsonify({"message": "Workout deleted successfully"}), 200
 
-
-# =====================================================
 # WORKOUT EXERCISES
-# =====================================================
 
 @api_bp.post("/workouts/<int:workout_id>/exercises/<int:exercise_id>/workout_exercises")
 def add_exercise_to_workout(workout_id, exercise_id):
